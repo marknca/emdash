@@ -156,6 +156,41 @@ export interface ImportResult {
 	byCollection: Record<string, number>;
 }
 
+export interface GhostAuthorInfo {
+	id: string;
+	slug: string;
+	name: string;
+	email?: string;
+	postCount: number;
+}
+
+export interface GhostAnalysis {
+	site: {
+		title: string;
+		url: string;
+		tagline?: string;
+	};
+	postTypes: PostTypeAnalysis[];
+	attachments: {
+		count: number;
+		items: AttachmentInfo[];
+	};
+	tags: number;
+	authors: GhostAuthorInfo[];
+}
+
+export interface GhostImportConfig extends ImportConfig {
+	importSiteTitle?: boolean;
+}
+
+export interface GhostImportResult extends ImportResult {
+	settings?: {
+		applied: string[];
+		skipped: string[];
+		errors: Array<{ setting: string; error: string }>;
+	};
+}
+
 /**
  * Analyze a WordPress WXR file
  */
@@ -195,6 +230,41 @@ export async function executeWxrImport(file: File, config: ImportConfig): Promis
 		body: formData,
 	});
 	return parseApiResponse<ImportResult>(response, "Failed to import");
+}
+
+export async function analyzeGhost(file: File): Promise<GhostAnalysis> {
+	const formData = new FormData();
+	formData.append("file", file);
+
+	const response = await apiFetch(`${API_BASE}/import/ghost/analyze`, {
+		method: "POST",
+		body: formData,
+	});
+	return parseApiResponse<GhostAnalysis>(response, "Failed to analyze Ghost export");
+}
+
+export async function prepareGhostImport(request: PrepareRequest): Promise<PrepareResult> {
+	const response = await apiFetch(`${API_BASE}/import/ghost/prepare`, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(request),
+	});
+	return parseApiResponse<PrepareResult>(response, "Failed to prepare Ghost import");
+}
+
+export async function executeGhostImport(
+	file: File,
+	config: GhostImportConfig,
+): Promise<GhostImportResult> {
+	const formData = new FormData();
+	formData.append("file", file);
+	formData.append("config", JSON.stringify(config));
+
+	const response = await apiFetch(`${API_BASE}/import/ghost/execute`, {
+		method: "POST",
+		body: formData,
+	});
+	return parseApiResponse<GhostImportResult>(response, "Failed to import Ghost site");
 }
 
 // =============================================================================

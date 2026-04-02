@@ -214,7 +214,7 @@ export function SidebarNav({ manifest }: SidebarNavProps) {
 	}
 
 	adminItems.push(
-		{ to: "/import/wordpress", label: "Import", icon: Upload, minRole: ROLE_ADMIN },
+		{ to: "/import", label: "Import", icon: Upload, minRole: ROLE_ADMIN },
 		{ to: "/settings", label: "Settings", icon: Gear, minRole: ROLE_ADMIN },
 	);
 

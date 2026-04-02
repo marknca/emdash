@@ -209,6 +209,21 @@ export function injectCoreRoutes(injectRoute: InjectRoute): void {
 		entrypoint: resolveRoute("api/import/wordpress/rewrite-urls.ts"),
 	});
 
+	injectRoute({
+		pattern: "/_emdash/api/import/ghost/analyze",
+		entrypoint: resolveRoute("api/import/ghost/analyze.ts"),
+	});
+
+	injectRoute({
+		pattern: "/_emdash/api/import/ghost/prepare",
+		entrypoint: resolveRoute("api/import/ghost/prepare.ts"),
+	});
+
+	injectRoute({
+		pattern: "/_emdash/api/import/ghost/execute",
+		entrypoint: resolveRoute("api/import/ghost/execute.ts"),
+	});
+
 	// WordPress Plugin (EmDash Exporter) direct import routes
 	injectRoute({
 		pattern: "/_emdash/api/import/wordpress-plugin/analyze",

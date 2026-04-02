@@ -231,10 +231,10 @@ function buildNavItems(
 		{
 			id: "import",
 			title: "Import",
-			to: "/import/wordpress",
+			to: "/import",
 			icon: Upload,
 			minRole: ROLE_ADMIN,
-			keywords: ["wordpress", "migrate"],
+			keywords: ["wordpress", "ghost", "migrate"],
 		},
 		{
 			id: "settings",

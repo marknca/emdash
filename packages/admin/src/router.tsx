@@ -26,6 +26,8 @@ import { ContentTypeEditor } from "./components/ContentTypeEditor";
 import { ContentTypeList } from "./components/ContentTypeList";
 import { Dashboard } from "./components/Dashboard";
 import { DeviceAuthorizePage } from "./components/DeviceAuthorizePage";
+import { GhostImport } from "./components/GhostImport";
+import { ImportHome } from "./components/ImportHome";
 import { LoginPage } from "./components/LoginPage";
 import { MarketplaceBrowse } from "./components/MarketplaceBrowse";
 import { MarketplacePluginDetail } from "./components/MarketplacePluginDetail";
@@ -1193,11 +1195,23 @@ function ThemeDetailPage() {
 	return <ThemeMarketplaceDetail themeId={themeId} />;
 }
 
+const importHomeRoute = createRoute({
+	getParentRoute: () => adminLayoutRoute,
+	path: "/import",
+	component: ImportHome,
+});
+
 // WordPress import route
 const wordpressImportRoute = createRoute({
 	getParentRoute: () => adminLayoutRoute,
 	path: "/import/wordpress",
 	component: WordPressImport,
+});
+
+const ghostImportRoute = createRoute({
+	getParentRoute: () => adminLayoutRoute,
+	path: "/import/ghost",
+	component: GhostImport,
 });
 
 // Menu routes
@@ -1509,6 +1523,8 @@ const adminRoutes = adminLayoutRoute.addChildren([
 	marketplaceBrowseRoute,
 	themeMarketplaceBrowseRoute,
 	themeMarketplaceDetailRoute,
+	importHomeRoute,
+	ghostImportRoute,
 	pluginRoute,
 	redirectsRoute,
 	sectionsListRoute,
